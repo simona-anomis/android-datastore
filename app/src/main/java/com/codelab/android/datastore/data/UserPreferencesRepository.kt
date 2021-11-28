@@ -24,6 +24,7 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.emptyPreferences
 import androidx.datastore.preferences.core.stringPreferencesKey
 import java.io.IOException
+import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.first
@@ -44,7 +45,8 @@ data class UserPreferences(
 /**
  * Class that handles saving and retrieving user preferences
  */
-class UserPreferencesRepository(private val dataStore: DataStore<Preferences>) {
+
+class UserPreferencesRepository @Inject constructor(private val dataStore: DataStore<Preferences>) {
 
     private val TAG: String = "UserPreferencesRepo"
 

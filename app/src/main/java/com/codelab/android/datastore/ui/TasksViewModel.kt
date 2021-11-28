@@ -26,6 +26,8 @@ import com.codelab.android.datastore.data.Task
 import com.codelab.android.datastore.data.TasksRepository
 import com.codelab.android.datastore.data.UserPreferences
 import com.codelab.android.datastore.data.UserPreferencesRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 
@@ -35,7 +37,8 @@ data class TasksUiModel(
     val sortOrder: SortOrder
 )
 
-class TasksViewModel(
+@HiltViewModel
+class TasksViewModel @Inject constructor(
     repository: TasksRepository,
     private val userPreferencesRepository: UserPreferencesRepository
 ) : ViewModel() {

@@ -20,8 +20,9 @@ import kotlinx.coroutines.flow.flowOf
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import javax.inject.Inject
 
-object TasksRepository {
+class TasksRepository @Inject constructor() {
 
     private val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.US)
 
