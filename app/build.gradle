@@ -18,6 +18,8 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id "com.google.protobuf" version "0.8.17"
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
 }
 
 android {
@@ -72,6 +74,10 @@ dependencies {
 
     // protobuf
     implementation  "com.google.protobuf:protobuf-javalite:$protobufVersion"
+
+    // hilt
+    implementation "com.google.dagger:hilt-android:$hiltVersion"
+    kapt "com.google.dagger:hilt-compiler:$hiltVersion"
 }
 
 protobuf {

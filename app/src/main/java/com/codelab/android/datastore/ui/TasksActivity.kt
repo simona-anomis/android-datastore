@@ -31,36 +31,9 @@ import com.codelab.android.datastore.data.TasksRepository
 import com.codelab.android.datastore.data.UserPreferencesRepository
 import com.codelab.android.datastore.data.UserPreferencesSerializer
 import com.codelab.android.datastore.databinding.ActivityTasksBinding
+import dagger.hilt.android.AndroidEntryPoint
 
-private const val USER_PREFERENCES_NAME = "user_preferences"
-private const val DATA_STORE_FILE_NAME = "user_prefs.pb"
-private const val SORT_ORDER_KEY = "sort_order"
-
-// Build the DataStore
-private val Context.userPreferencesStore: DataStore<UserPreferences> by dataStore(
-    fileName = DATA_STORE_FILE_NAME,
-    serializer = UserPreferencesSerializer,
-    produceMigrations = { context ->
-        listOf(
-            SharedPreferencesMigration(
-                context,
-                USER_PREFERENCES_NAME
-            ) { sharedPrefs: SharedPreferencesView, currentData: UserPreferences ->
-                // Define the mapping from SharedPreferences to UserPreferences
-                if (currentData.sortOrder == SortOrder.UNSPECIFIED) {
-                    currentData.toBuilder().setSortOrder(
-                        SortOrder.valueOf(
-                            sharedPrefs.getString(SORT_ORDER_KEY, SortOrder.NONE.name)!!
-                        )
-                    ).build()
-                } else {
-                    currentData
-                }
-            }
-        )
-    }
-)
-
+@AndroidEntryPoint
 class TasksActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityTasksBinding
@@ -74,13 +47,7 @@ class TasksActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
-        viewModel = ViewModelProvider(
-            this,
-            TasksViewModelFactory(
-                TasksRepository,
-                UserPreferencesRepository(userPreferencesStore)
-            )
-        ).get(TasksViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(TasksViewModel::class.java)
 
         setupRecyclerView()
 
